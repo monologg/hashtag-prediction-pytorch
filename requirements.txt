@@ -1,0 +1,6 @@
+emoji
+transformers==2.2.1
+h5py
+torchvision
+torch==1.1.0
+sklearn
