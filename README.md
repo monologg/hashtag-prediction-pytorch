@@ -2,7 +2,7 @@
 
 Multimodal hashtag prediction from instagram
 
-## What this is for
+## Overview
 
 <p float="left" align="center">
     <img width="600" src="https://user-images.githubusercontent.com/28896432/70353952-d6307780-18b1-11ea-9db4-f38399a48dc0.png" />  
