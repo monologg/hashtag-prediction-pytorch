@@ -22,7 +22,7 @@ class FCLayer(nn.Module):
 class HashtagClassifier(AlbertPreTrainedModel):
     def __init__(self, bert_config):
         super(HashtagClassifier, self).__init__(bert_config)
-        self.albert = AlbertModel.from_pretrained('albert-base-v2', config=bert_config)  # Load pretrained bert
+        self.albert = AlbertModel(bert_config)  # Load pretrained bert
 
         self.num_labels = bert_config.num_labels
 
@@ -36,7 +36,7 @@ class HashtagClassifier(AlbertPreTrainedModel):
                               token_type_ids=token_type_ids)  # sequence_output, pooled_output, (hidden_states), (attentions)
         pooled_output = outputs[1]  # [CLS]
         text_tensors = self.text_classifier(pooled_output)
-        
+
         # NOTE Concat text feature and img features [512, 7, 7]
         img_flatten = torch.flatten(img_features, start_dim=1)
         img_tensors = self.img_classifier(img_flatten)
