@@ -4,14 +4,14 @@ import argparse
 import gdown
 
 import torch
+import emoji
 import numpy as np
-from keras.preprocessing import image
+import tensorflow as tf
+from tensorflow.keras.preprocessing import image
 from torchvision.models import vgg16
 
-from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input
-
-import tensorflow as tf
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.vgg16 import preprocess_input
 
 from flask import Flask, jsonify, request
 
@@ -33,7 +33,6 @@ label_lst = get_label()
 
 vgg_model = VGG16(weights='imagenet', include_top=False)
 
-graph = tf.get_default_graph()
 
 DOWNLOAD_URL_MAP = {
     'hashtag': {
@@ -103,14 +102,12 @@ def convert_texts_to_tensors(texts, max_seq_len, no_cuda=True):
 
 
 def img_to_tensor(img_path, no_cuda):
-    global graph
     img = image.load_img(img_path, target_size=(224, 224))
     img_data = image.img_to_array(img)
     img_data = np.expand_dims(img_data, axis=0)
     img_data = preprocess_input(img_data)
 
-    with graph.as_default():
-        vgg16_feature = vgg_model.predict(img_data)
+    vgg16_feature = vgg_model.predict(img_data)
 
     feat = np.transpose(vgg16_feature, (0, 3, 1, 2))
     # Change list to torch tensor
@@ -128,7 +125,7 @@ def predict():
     download(img_link, "{}.jpg".format(img_id), cachedir='~/img/')
     img_tensor = img_to_tensor(os.path.join(os.path.expanduser('~/img/'), "{}.jpg".format(img_id)), args.no_cuda)
 
-    texts = [rcv_data['text'].lower()]
+    texts = [emoji.demojize(rcv_data['text'].lower())]
     max_seq_len = rcv_data['max_seq_len']
 
     input_ids, attention_mask, token_type_ids = convert_texts_to_tensors(texts, max_seq_len, args.no_cuda)

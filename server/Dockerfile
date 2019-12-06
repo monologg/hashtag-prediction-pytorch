@@ -30,4 +30,4 @@ RUN pip3 install -r requirements.txt --no-cache-dir
 
 # Run the server
 EXPOSE 80
-CMD [ "python3", "app.py", "--model_type", "nsmc", "--add_special_tokens", "--no_cuda", "--port_num", "80"]
+CMD [ "python3", "app.py"]
