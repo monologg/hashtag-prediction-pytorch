@@ -6,8 +6,12 @@ import gdown
 import torch
 import numpy as np
 from keras.preprocessing import image
+from torchvision.models import vgg16
+
 from keras.applications.vgg16 import VGG16
 from keras.applications.vgg16 import preprocess_input
+
+import tensorflow as tf
 
 from flask import Flask, jsonify, request
 
@@ -29,6 +33,7 @@ label_lst = get_label()
 
 vgg_model = VGG16(weights='imagenet', include_top=False)
 
+graph = tf.get_default_graph()
 
 DOWNLOAD_URL_MAP = {
     'hashtag': {
@@ -97,16 +102,20 @@ def convert_texts_to_tensors(texts, max_seq_len, no_cuda=True):
     return input_ids, attention_mask, token_type_ids
 
 
-def img_to_tensor(img_path):
+def img_to_tensor(img_path, no_cuda):
+    global graph
     img = image.load_img(img_path, target_size=(224, 224))
     img_data = image.img_to_array(img)
     img_data = np.expand_dims(img_data, axis=0)
     img_data = preprocess_input(img_data)
 
-    vgg16_feature = vgg_model.predict(img_data)
+    with graph.as_default():
+        vgg16_feature = vgg_model.predict(img_data)
 
     feat = np.transpose(vgg16_feature, (0, 3, 1, 2))
-    return torch.tensor(feat, dtype=torch.float)
+    # Change list to torch tensor
+    device = "cuda" if torch.cuda.is_available() and not no_cuda else "cpu"
+    return torch.tensor(feat, dtype=torch.float).to(device)
 
 
 @app.route("/predict", methods=["POST"])
@@ -117,7 +126,7 @@ def predict():
     img_id = rcv_data['image_id']
     img_link = "https://drive.google.com/uc?id={}".format(img_id)
     download(img_link, "{}.jpg".format(img_id), cachedir='~/img/')
-    img_tensor = img_to_tensor(os.path.expanduser('~/img/'))
+    img_tensor = img_to_tensor(os.path.join(os.path.expanduser('~/img/'), "{}.jpg".format(img_id)), args.no_cuda)
 
     texts = [rcv_data['text'].lower()]
     max_seq_len = rcv_data['max_seq_len']
@@ -127,11 +136,11 @@ def predict():
         outputs = model(input_ids, attention_mask, token_type_ids, None, img_tensor)
     logits = outputs[0]
 
-    _, top_3_idx = logits.topk(3)
+    _, top_idx = logits.topk(rcv_data['n_label'])
 
-    # top_3_idx = top_3_idx.detach().cpu().numpy()[0]
     preds = []
-    for idx in top_3_idx:
+    print(top_idx)
+    for idx in top_idx[0]:
         preds.append(label_lst[idx])
 
     total_time = round(time.time() - start_t, 2)
