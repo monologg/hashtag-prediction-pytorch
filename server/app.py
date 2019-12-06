@@ -18,8 +18,6 @@ from flask import Flask, jsonify, request
 from transformers import AlbertTokenizer, AlbertConfig
 from model import HashtagClassifier
 
-from distilkobert import get_nsmc_model
-
 
 def get_label():
     return [label.strip() for label in open('label.txt', 'r', encoding='utf-8')]

@@ -28,6 +28,9 @@ WORKDIR /app
 # Install requirements
 RUN pip3 install -r requirements.txt --no-cache-dir
 
+# Save pretrained model in advance
+RUN python3 download_models.py
+
 # Run the server
 EXPOSE 80
 CMD [ "python3", "app.py"]
