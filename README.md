@@ -12,7 +12,7 @@ Multimodal hashtag prediction from instagram
 
 - `ALBERT` for text, `VGG16` for image
 - Take out the `[CLS]` token from ALBERT, and change it to 100 dim
-- Change 100 dim after flattening the VGG16 output
+- Change to 100 dim after flattening the VGG16 output
 - Concat them, and predict among 100 labels.
 
 ## How to use
@@ -45,7 +45,7 @@ curl -X GET "localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&tex
 localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=10
 ```
 
-## Run on ainize
+## Run on Ainize
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/monologg/hashtag-prediction-pytorch)
 
