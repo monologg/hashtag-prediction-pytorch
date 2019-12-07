@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Post</title>
+  </head>
+  <body>
+    <form action="/result" method="post" enctype=multipart/form-data>
+      <p>사진 입력</p>
+      <input type="file" name="photo" />
+      <p>텍스트 입력 : <input type="text" name="caption" /></p>
+      <p>예측 라벨 개수 : <input type="text" name="n_label" /></p>
+      <input type="submit" value="클릭" />
+    </form>
+  </body>
+</html>

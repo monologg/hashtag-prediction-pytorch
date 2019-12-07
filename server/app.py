@@ -13,10 +13,14 @@ from torchvision.models import vgg16
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template, url_for
 
 from transformers import AlbertTokenizer, AlbertConfig
 from model import HashtagClassifier
+
+
+from werkzeug import secure_filename
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 
 def get_label():
@@ -24,6 +28,16 @@ def get_label():
 
 
 app = Flask(__name__)
+
+PHOTO_FOLDER = 'static'
+app.config['UPLOAD_FOLDER'] = PHOTO_FOLDER
+
+
+photos = UploadSet('photos', IMAGES)
+app.config['UPLOADED_PHOTOS_DEST'] = PHOTO_FOLDER
+configure_uploads(app, photos)
+
+
 tokenizer = None
 model = None
 args = None
@@ -113,36 +127,33 @@ def img_to_tensor(img_path, no_cuda):
     return torch.tensor(feat, dtype=torch.float).to(device)
 
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST", "GET"])
 def predict():
-    rcv_data = request.get_json()
-    start_t = time.time()
-    # Prediction
-    img_id = rcv_data['image_id']
-    img_link = "https://drive.google.com/uc?id={}".format(img_id)
-    download(img_link, "{}.jpg".format(img_id), cachedir='~/img/')
-    img_tensor = img_to_tensor(os.path.join(os.path.expanduser('~/img/'), "{}.jpg".format(img_id)), args.no_cuda)
+    img_id = request.args.get('image_id')
+    text = request.args.get('text')
+    max_seq_len = int(request.args.get('max_seq_len'))
+    n_label = int(request.args.get('n_label'))
 
-    texts = [emoji.demojize(rcv_data['text'].lower())]
-    max_seq_len = rcv_data['max_seq_len']
+    # Prediction
+    img_link = "https://drive.google.com/uc?id={}".format(img_id)
+    download(img_link, "{}.jpg".format(img_id), cachedir=app.config['UPLOAD_FOLDER'])
+    img_tensor = img_to_tensor(os.path.join(app.config['UPLOAD_FOLDER'], "{}.jpg".format(img_id)), args.no_cuda)
+
+    texts = [emoji.demojize(text.lower())]
 
     input_ids, attention_mask, token_type_ids = convert_texts_to_tensors(texts, max_seq_len, args.no_cuda)
     with torch.no_grad():
         outputs = model(input_ids, attention_mask, token_type_ids, None, img_tensor)
     logits = outputs[0]
 
-    _, top_idx = logits.topk(rcv_data['n_label'])
+    _, top_idx = logits.topk(n_label)
 
     preds = []
     print(top_idx)
     for idx in top_idx[0]:
-        preds.append(label_lst[idx])
+        preds.append("#{}".format(label_lst[idx]))
 
-    total_time = round(time.time() - start_t, 2)
-    return jsonify(
-        output=preds,
-        time=total_time
-    )
+    return render_template("result.html", user_image=url_for(app.config['UPLOAD_FOLDER'], filename="{}.jpg".format(img_id)), text=text, tag=" ".join(preds))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,40 @@
+openapi: 3.0.0 # Open api version
+
+info: # Set basic infomation
+  title: hashtag
+  version: 0.1.0
+
+servers: # Set your server endpoint
+  - url: https://endpoint.ainize.ai/monologg/hashtag
+
+paths:
+  /predict: # POST method path
+    post:
+      parameters: # Set parameter values here
+        - name: image_id # Set parameter name
+          in: query # Select amongst query, header, path, and cookie
+          required: true
+          allowReserved: true # Option for percent-encoding, default; false
+        - name: text
+          in: query
+          required: true
+          allowReserved: true # Option for percent-encoding, default; false
+        - name: max_seq_len
+          in: query
+          required: true
+          allowReserved: true # Option for percent-encoding, default; false
+        - name: n_label
+          in: query
+          required: true
+          allowReserved: true # Option for percent-encoding, default; false
+      responses: # Set response
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Bad Request Error
+        default:
+          description: Unexpected Error

@@ -38,18 +38,38 @@ $ docker run -d -p 80:80 adieujw/hashtag:latest
 ### 3. Request
 
 ```bash
-$ curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1oKJeos4q19l07o82UhcDqDKPxdULX38q","text":"I am very cool.", "max_seq_len":20,"n_label":10}' http://0.0.0.0:80/predict
+# 1. curl
+curl -X POST "localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
+
+# 2. url
+localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3
 ```
 
 ## Run on ainize
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/monologg/hashtag-prediction-pytorch)
 
+![image](https://user-images.githubusercontent.com/28896432/70370210-90060300-1907-11ea-882c-f7c2251971f5.png)
+
+1. image_id : the share id you can get from google drive above
+2. text : like caption in instagram
+3. max_seq_len: maximum sequence length
+4. n_label: num of labels you want to predict
+
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-","text":"20 days till Christmas 😍🎅", "max_seq_len":20,"n_label":10}' https://endpoint.ainize.ai/monologg/hashtag/predict
+https://endpoint.ainize.ai/monologg/hashtag/predict?image_id={image_id}&text={text}&max_seq_len={max_seq_len}&n_label={n_label}
+```
+
+```bash
+##### Examples #####
+# 1. curl
+curl -X POST "https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
+
+# 2. URL
+https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3
 ```
 
 ## Reference
 
 - [Huggingface Transformers](https://github.com/huggingface/transformers)
-- [ALBERT Paper]()
+- [ALBERT Paper](https://arxiv.org/abs/1909.11942)
