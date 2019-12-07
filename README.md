@@ -49,12 +49,13 @@ localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%2
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/monologg/hashtag-prediction-pytorch)
 
-![image](https://user-images.githubusercontent.com/28896432/70370210-90060300-1907-11ea-882c-f7c2251971f5.png)
+<p float="left" align="left">
+    <img width="400" src="https://user-images.githubusercontent.com/28896432/70370210-90060300-1907-11ea-882c-f7c2251971f5.png" />
 
-1. image_id : the share id you can get from google drive above
-2. text : like caption in instagram
-3. max_seq_len: maximum sequence length
-4. n_label: num of labels you want to predict
+1. `image_id` : the share id you can get from google drive above
+2. `text` : like caption in instagram
+3. `max_seq_len`: maximum sequence length
+4. `n_label`: num of labels you want to predict
 
 ```bash
 https://endpoint.ainize.ai/monologg/hashtag/predict?image_id={image_id}&text={text}&max_seq_len={max_seq_len}&n_label={n_label}
