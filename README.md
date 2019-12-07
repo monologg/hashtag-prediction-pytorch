@@ -39,7 +39,7 @@ $ docker run -d -p 80:80 adieujw/hashtag:latest
 
 ```bash
 # 1. curl
-curl -X POST "localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
+curl -X GET "localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
 
 # 2. url
 localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3
@@ -64,11 +64,15 @@ https://endpoint.ainize.ai/monologg/hashtag/predict?image_id={image_id}&text={te
 ```bash
 ##### Examples #####
 # 1. curl
-curl -X POST "https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
+curl -X GET "https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3"
 
 # 2. URL
 https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=3
 ```
+
+### Result on html
+
+![image](https://user-images.githubusercontent.com/28896432/70370697-ba5abf00-190d-11ea-95c9-2d6d2b22d777.png)
 
 ## Reference
 

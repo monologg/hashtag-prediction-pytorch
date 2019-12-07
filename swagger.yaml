@@ -8,8 +8,8 @@ servers: # Set your server endpoint
   - url: https://endpoint.ainize.ai/monologg/hashtag
 
 paths:
-  /predict: # POST method path
-    post:
+  /predict: # GET method path
+    get:
       parameters: # Set parameter values here
         - name: image_id # Set parameter name
           in: query # Select amongst query, header, path, and cookie
