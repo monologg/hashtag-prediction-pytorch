@@ -72,7 +72,8 @@ https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79V
 
 ### Result on html
 
-![image](https://user-images.githubusercontent.com/28896432/70370697-ba5abf00-190d-11ea-95c9-2d6d2b22d777.png)
+<p float="left" align="left">
+    <img width="400" src="https://user-images.githubusercontent.com/28896432/70370717-f857e300-190d-11ea-8804-b9ca6b481f85.png" />
 
 ## Reference
 
