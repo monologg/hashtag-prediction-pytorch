@@ -41,6 +41,14 @@ $ docker run -d -p 80:80 adieujw/hashtag:latest
 $ curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1oKJeos4q19l07o82UhcDqDKPxdULX38q","text":"I am very cool.", "max_seq_len":20,"n_label":10}' http://0.0.0.0:80/predict
 ```
 
+## Run on ainize
+
+[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/monologg/hashtag-prediction-pytorch)
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-","text":"20 days till Christmas 😍🎅", "max_seq_len":20,"n_label":10}' https://endpoint.ainize.ai/monologg/hashtag/predict
+```
+
 ## Reference
 
 - [Huggingface Transformers](https://github.com/huggingface/transformers)

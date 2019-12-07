@@ -1,2 +1,3 @@
 #!/bin/bash
-curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1oKJeos4q19l07o82UhcDqDKPxdULX38q","text":"I am very cool. Come to my place~~~", "max_seq_len":20,"n_label":10}' http://0.0.0.0:80/predict
+curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1okfka3J9d2KBwVqNNSoqeWzQ2YfONijy","text":"I am very cool. Come to my place~~~", "max_seq_len":20,"n_label":10}' http://0.0.0.0:80/predict
+curl -X POST -H "Content-Type: application/json" -d '{"image_id":"1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-","text":"20 days till Christmas 😍🎅", "max_seq_len":20,"n_label":10}' http://0.0.0.0:80/predict
