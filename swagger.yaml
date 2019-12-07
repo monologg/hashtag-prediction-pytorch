@@ -13,19 +13,23 @@ paths:
       parameters: # Set parameter values here
         - name: image_id # Set parameter name
           in: query # Select amongst query, header, path, and cookie
+          default: 1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-
           required: true
           allowReserved: true # Option for percent-encoding, default; false
         - name: text
           in: query
           required: true
+          default: 20 days till Christmas 😍🎅
           allowReserved: true # Option for percent-encoding, default; false
         - name: max_seq_len
           in: query
           required: true
+          default: 30
           allowReserved: true # Option for percent-encoding, default; false
         - name: n_label
           in: query
           required: true
+          default: 10
           allowReserved: true # Option for percent-encoding, default; false
       responses: # Set response
         "200":

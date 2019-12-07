@@ -153,7 +153,7 @@ def predict():
     for idx in top_idx[0]:
         preds.append("#{}".format(label_lst[idx]))
 
-    return render_template("result.html", user_image=url_for(app.config['UPLOAD_FOLDER'], filename="{}.jpg".format(img_id)), text=text, tag=" ".join(preds))
+    return render_template("result.html", user_image="./{}/{}".format(app.config['UPLOAD_FOLDER'], "{}.jpg".format(img_id)), text=text, tag=" ".join(preds))
 
 
 if __name__ == "__main__":
