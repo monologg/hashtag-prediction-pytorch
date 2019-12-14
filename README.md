@@ -15,6 +15,11 @@ Multimodal hashtag prediction from instagram
 - Change to 100 dim after flattening the VGG16 output
 - Concat them, and predict among 100 labels.
 
+## Dataset
+
+- Collect 50000 data from instagram (w/ selenium crawler)
+- Only include English data
+
 ## How to use
 
 ### 1. Run docker server
@@ -38,10 +43,7 @@ $ docker run -d -p 80:80 adieujw/hashtag:latest
 ### 3. Request
 
 ```bash
-# 1. curl
-curl -X GET "localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=10"
-
-# 2. url
+# URL
 localhost:80/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=10
 ```
 
@@ -62,11 +64,7 @@ https://endpoint.ainize.ai/monologg/hashtag/predict?image_id={image_id}&text={te
 ```
 
 ```bash
-##### Examples #####
-# 1. curl
-curl -X GET "https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=10"
-
-# 2. URL
+# URL
 https://endpoint.ainize.ai/monologg/hashtag/predict?image_id=1DGu9R5a9jpkY-fy79VrGFmCdJigzTMC-&text=20%20days%20till%20Christmas%20%F0%9F%98%8D%F0%9F%8E%85&max_seq_len=20&n_label=10
 ```
 
