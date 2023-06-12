@@ -1,5 +1,5 @@
 emoji
-transformers==2.2.1
+transformers==4.30.0
 h5py
 torchvision
 torch==1.1.0
